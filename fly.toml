@@ -1,0 +1,18 @@
+# fly launch --no-deploy   (then:)
+#   fly volumes create muse_data --size 1
+#   fly secrets set SPECTRUM_PROJECT_ID=... SPECTRUM_PROJECT_SECRET=... OPENAI_API_KEY=...
+#   fly deploy
+app = "muse-imessage-agent"
+primary_region = "iad"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[mounts]
+  source = "muse_data"
+  destination = "/data"
+
+# Muse only makes outbound connections (no HTTP server), so there is no [http_service].
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "512mb"

@@ -1,0 +1,22 @@
+# Render "Background Worker" (Muse has no web port).
+services:
+  - type: worker
+    name: muse
+    runtime: docker
+    plan: starter            # a paid instance is required for a persistent disk
+    autoDeploy: true
+    disk:
+      name: muse-data
+      mountPath: /data
+      sizeGB: 1
+    envVars:
+      - key: SPECTRUM_PROJECT_ID
+        sync: false
+      - key: SPECTRUM_PROJECT_SECRET
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: LLM_PROVIDER
+        value: openai
+      - key: MUSE_DB_PATH
+        value: /data/muse.db
